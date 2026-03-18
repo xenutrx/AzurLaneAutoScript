@@ -27,6 +27,5 @@ pyzmq
 onepush
 pydantic
 psutil
-av
 chardet
 mxnet-alas
