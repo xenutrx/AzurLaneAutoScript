@@ -21,7 +21,7 @@ MAP.map_data = """
     SP -- -- -- ++ -- ++ ++ -- -- ++
 """
 MAP.weight_data = """
-    50 50 50 50 50 50 50 50 50 50 50
+    50 50 50 50 50 50 50 50 50 50 40
     50 50 50 50 50 50 50 50 50 50 50
     50 50 50 50 50 50 50 40 50 50 50
     50 50 50 40 50 40 40 40 50 50 50
@@ -88,7 +88,7 @@ class Campaign(CampaignBase):
         return super().battle_default()
 
     def battle_0(self):
-        if self.clear_chosen_enemy(D4):
+        if self.clear_chosen_enemy(D5):
             return True
 
         return self.battle_default()
