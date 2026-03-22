@@ -585,6 +585,10 @@
       "name": "最適化設定",
       "help": ""
     },
+    "UseOcrGpuAcceleration": {
+      "name": "启用 GPU 加速",
+      "help": "开启GPU加速"
+    },
     "ScreenshotInterval": {
       "name": "スクリーンショット速度をX秒に1枚に減速",
       "help": "2回のスクリーンショット間の最小間隔。0.1～0.3に制限。高スペックPCでCPU使用率を低減できます。"

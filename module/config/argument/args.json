@@ -444,6 +444,10 @@
       }
     },
     "Optimization": {
+      "UseOcrGpuAcceleration": {
+        "type": "checkbox",
+        "value": true
+      },
       "ScreenshotInterval": {
         "type": "input",
         "value": 0.3
