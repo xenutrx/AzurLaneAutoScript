@@ -3,6 +3,7 @@
 import time
 import inspect
 from sys import maxsize
+from threading import Thread
 
 import inflection
 
@@ -2193,10 +2194,13 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             try:
                 if hasattr(self, 'notify_push'):
                     zone_type_text = "安全海域" if siren_bug_type == 'safe' else "普通海域"
-                    self.notify_push(
-                        title="[Alas] 塞壬Bug利用 - 完成",
-                        content=f"已完成塞壬研究装置Bug利用\\n目标区域: {target_zone} ({zone_type_text})\\n已返回侵蚀一区域"
-                    )
+                    Thread(
+                        target=self.notify_push,
+                        kwargs={
+                            "title": "[Alas] 塞壬Bug利用 - 完成",
+                            "content": f"已完成塞壬研究装置Bug利用\\n目标区域: {target_zone} ({zone_type_text})\\n已返回侵蚀一区域"
+                        }
+                    ).start()
             except Exception as notify_err:
                 logger.debug(f'发送成功通知失败: {notify_err}')
             
@@ -2217,10 +2221,13 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
                 logger.info('自动收菜完成，返回正常任务流程')
                 try:
                     if hasattr(self, 'notify_push'):
-                        self.notify_push(
-                            title="[Alas] 塞壬Bug利用 - 自动收菜完成",
-                            content=f"已达到塞壬研究装置Bug利用阈值，自动收菜完成"
-                        )
+                        Thread(
+                            target=self.notify_push,
+                            kwargs={
+                                "title": "[Alas] 塞壬Bug利用 - 自动收菜完成",
+                                "content": f"已达到塞壬研究装置Bug利用阈值，自动收菜完成"
+                            }
+                        ).start()
                 except Exception as notify_err:
                     logger.debug(f'发送自动收菜完成通知失败: {notify_err}')
 
@@ -2253,10 +2260,13 @@ class OSMap(OSFleet, Map, GlobeCamera, StorageHandler, StrategicSearchHandler):
             # 发送失败通知
             try:
                 if hasattr(self, 'notify_push'):
-                    self.notify_push(
-                        title="[Alas] 塞壬Bug利用 - 失败",
-                        content=f"塞壬研究装置BUG利用失败\\n错误: {str(e)}\\n请检查日志"
-                    )
+                    Thread(
+                        target=self.notify_push,
+                        kwargs={
+                            "title": "[Alas] 塞壬Bug利用 - 失败",
+                            "content": f"塞壬研究装置BUG利用失败\\n错误: {str(e)}\\n请检查日志"
+                        }
+                    ).start()
             except Exception as notify_err:
                 logger.debug(f'发送失败通知失败: {notify_err}')
             
