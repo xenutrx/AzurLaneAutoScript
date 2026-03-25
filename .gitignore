@@ -250,7 +250,7 @@ $RECYCLE.BIN/
 *.lnk
 adb_port.txt
 adb_port.ini
-*.exe
+alas.exe
 !popup.exe
 *.zip
 console.bat
