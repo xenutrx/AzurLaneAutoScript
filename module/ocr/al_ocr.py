@@ -49,7 +49,7 @@ class EnModel:
             "Det.model_path": None,
             "Cls.model_path": None,
             "Rec.ocr_version": OCRVersion.PPOCRV4,
-            "Rec.model_path": "bin/ocr_models/en-US/alocr-en-us-v2.0.nvc.onnx",
+            "Rec.model_path": "bin/ocr_models/en-US/alocr-en-us-v2.6.nvc.onnx",
             "Rec.rec_keys_path": "bin/ocr_models/en-US/en.txt",
             "EngineConfig.onnxruntime.use_dml": USE_GPU
         }
