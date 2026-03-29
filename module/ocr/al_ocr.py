@@ -64,8 +64,44 @@ class EnModel:
         self.model = RapidOCR(params=self.params)
 
 
+class JpModel:
+    def __init__(self):
+        self.params = {
+            "Global.use_det": False,
+            "Global.use_cls": False,
+            "Det.model_path": None,
+            "Cls.model_path": None,
+            "Rec.ocr_version": OCRVersion.PPOCRV5,
+            "Rec.model_path": "bin/ocr_models/JP/JP.onnx",
+            "Rec.rec_keys_path": "bin/ocr_models/JP/ppocrv5_dict.txt",
+            "EngineConfig.onnxruntime.use_dml": USE_GPU,
+            # 设置为 0 (ORT_DISABLE_ALL) 以完全禁用图优化，避免 DirectML 的识别精度损失
+            "EngineConfig.onnxruntime.graph_optimization_level": 0 if USE_GPU else 99,
+        }
+        self.model = RapidOCR(params=self.params)
+
+
+class TwModel:
+    def __init__(self):
+        self.params = {
+            "Global.use_det": False,
+            "Global.use_cls": False,
+            "Det.model_path": None,
+            "Cls.model_path": None,
+            "Rec.ocr_version": OCRVersion.PPOCRV5,
+            "Rec.model_path": "bin/ocr_models/TW/TW.onnx",
+            "Rec.rec_keys_path": "bin/ocr_models/TW/ppocrv5_dict.txt",
+            "EngineConfig.onnxruntime.use_dml": USE_GPU,
+            # 设置为 0 (ORT_DISABLE_ALL) 以完全禁用图优化，避免 DirectML 的识别精度损失
+            "EngineConfig.onnxruntime.graph_optimization_level": 0 if USE_GPU else 99,
+        }
+        self.model = RapidOCR(params=self.params)
+
+
 cn_model = CnModel()
 en_model = EnModel()
+jp_model = JpModel()
+tw_model = TwModel()
 
 
 class AlOcr:
@@ -81,6 +117,10 @@ class AlOcr:
     def init(self):
         if self.name in ["cn", "zhcn"]:
             self.model = cn_model.model
+        elif self.name == "jp":
+            self.model = jp_model.model
+        elif self.name == "tw":
+            self.model = tw_model.model
         else:
             self.model = en_model.model
         self._model_loaded = True
