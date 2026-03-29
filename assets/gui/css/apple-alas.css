@@ -177,13 +177,17 @@ body *:not(#pywebio-scope-log):not(#pywebio-scope-log *) {
 	overflow-y: auto;
 }
 
+#pywebio-scope-groups {
+	background-color: transparent !important;
+}
+
 /* ==========================================
    4. 布局组件
    ========================================== */
 
 /* --- 4.1 侧边栏（磨砂玻璃效果）--- */
 #pywebio-scope-aside {
-	background-color: rgba(245, 245, 247, 0.75) !important;
+	background-color: rgba(245, 245, 247, 0.88) !important;
 	backdrop-filter: blur(20px) saturate(180%);
 	-webkit-backdrop-filter: blur(20px) saturate(180%);
 	border-right: 1px solid rgba(0, 0, 0, 0.06) !important;
@@ -243,15 +247,30 @@ body *:not(#pywebio-scope-log):not(#pywebio-scope-log *) {
 
 /* --- 4.2 顶部导航栏 --- */
 #pywebio-scope-header {
-	background-color: rgba(255, 255, 255, 0.8) !important;
+	background-color: rgba(255, 255, 255, 0.92) !important;
 	backdrop-filter: blur(20px) saturate(180%);
 	-webkit-backdrop-filter: blur(20px) saturate(180%);
 	border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), 0 1px 8px rgba(0, 0, 0, 0.04) !important;
 	height: 56px !important;
 	z-index: 1000;
+	position: relative !important;
 	transition: all var(--transition-normal) var(--ease-ios-smooth), box-shadow var(--transition-normal) var(--ease-ios-smooth) !important;
 	will-change: box-shadow, transform;
+}
+
+#pywebio-scope-header::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(90deg, rgba(190, 215, 255, 0.45) 0%, rgba(220, 235, 255, 0.3) 40%, rgba(255, 255, 255, 0) 100%);
+	pointer-events: none;
+	z-index: 0;
+}
+
+#pywebio-scope-header > * {
+	position: relative !important;
+	z-index: 1 !important;
 }
 
 /* --- 4.3 导航器 --- */
@@ -861,6 +880,7 @@ input[type="checkbox"]:checked::before {
 	background-color: rgba(0, 122, 255, 0.12) !important;
 	font-weight: 600 !important;
 	position: relative !important;
+	overflow: visible !important;
 	transition: background-color var(--ease-spring-fast), color var(--ease-spring-fast) !important;
 }
 
@@ -875,6 +895,19 @@ input[type="checkbox"]:checked::before {
 	border-radius: 4px;
 	opacity: 1;
 	transform: translateY(-50%);
+}
+
+.btn-menu-active::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 10%;
+	width: 80%;
+	height: 60%;
+	background: radial-gradient(ellipse at center bottom, rgba(255, 255, 255, 0.7) 0%, transparent 70%);
+	pointer-events: none;
+	filter: blur(6px);
+	z-index: 0;
 }
 
 .btn-menu-active:hover {
@@ -980,8 +1013,10 @@ details[open]>summary::after {
 #pywebio-scope-ap_chart,
 #pywebio-scope-ship_exp_table {
 	background-color: var(--alas-apple-card-bg) !important;
+	backdrop-filter: blur(16px) saturate(180%);
+	-webkit-backdrop-filter: blur(16px) saturate(180%);
 	border-radius: var(--radius-lg) !important;
-	border: 1px solid rgba(0, 0, 0, 0.04) !important;
+	border: 1px solid var(--alas-apple-glass-border) !important;
 	box-shadow: var(--alas-apple-shadow) !important;
 	padding: var(--spacing-md) !important;
 	margin: 0 0 var(--spacing-md) 0 !important;
@@ -1080,6 +1115,37 @@ details[open]>summary::after {
 #pywebio-scope-ship_exp_table .pywebio-row {
 	margin: var(--spacing-md) 0 !important;
 	gap: var(--spacing-sm) !important;
+}
+
+/* 更新信息板块 */
+#pywebio-scope-updater_info,
+#pywebio-scope-updater_detail {
+	background-color: transparent !important;
+	backdrop-filter: blur(16px) saturate(180%);
+	-webkit-backdrop-filter: blur(16px) saturate(180%);
+	border-radius: var(--radius-lg) !important;
+	border: 1px solid var(--alas-apple-glass-border) !important;
+	box-shadow: var(--alas-apple-shadow) !important;
+	padding: var(--spacing-md) !important;
+	margin-bottom: var(--spacing-md) !important;
+	position: relative !important;
+}
+
+#pywebio-scope-updater_info::before,
+#pywebio-scope-updater_detail::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background-color: rgba(255, 255, 255, 0.55);
+	pointer-events: none;
+	z-index: 0;
+}
+
+#pywebio-scope-updater_info > *,
+#pywebio-scope-updater_detail > * {
+	position: relative !important;
+	z-index: 1 !important;
 }
 
 /* ==========================================
