@@ -5061,7 +5061,10 @@
       "Announcement": "公告",
       "Update": "更新器",
       "Remote": "远程控制",
-      "Utils": "工具"
+      "Utils": "工具",
+      "PreviewUpdatePopup": "预览更新弹窗",
+      "RaiseException": "抛出异常",
+      "RestartAlas": "重启Alas"
     },
     "Overview": {
       "Scheduler": "调度器",
