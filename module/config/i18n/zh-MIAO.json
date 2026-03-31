@@ -1726,6 +1726,10 @@
     "Favorite": {
       "name": "❤️ 优先抓眼熟的 (常用船)",
       "help": "先让指挥官最喜欢的常用主力去补习喵！"
+    },
+    "MinLevel": {
+      "name": "AddNewStudent.MinLevel.name",
+      "help": "AddNewStudent.MinLevel.help"
     }
   },
   "Research": {

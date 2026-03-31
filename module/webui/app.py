@@ -2427,7 +2427,7 @@ class AlasGUI(Frame):
 
             您使用的是修改版，请联系修改版的作者获取支持。 / You are using a modified version. Please contact the author of the modified version for support. / 改変版をご利用中です。サポートが必要な場合は、改変版の作者にお問い合わせください。 / 수정된 버전을 사용 중입니다. 지원이 필요하면 수정 버전의 작성자에게 문의해 주세요. / 您使用的是修改版，請聯繫修改版作者取得支援。
 
-            修改版项目地址 / Modified project address / 変更後のプロジェクトアドレス / 수정된 프로젝트 주소 / 修改版專案位址：`https://github.com/wess09/AzurLaneAutoScript`
+            修改版项目地址 / Modified project address /変更後のプロジェクトアドレス / 수정된 프로젝트 주소 / 修改版專案位址：`https://github.com/wess09/AzurLaneAutoScript`
 
             修改版问题请联系：
             For issues related to the revised version, please contact:
@@ -2675,19 +2675,27 @@ class AlasGUI(Frame):
                     with use_scope("ROOT"):
                         popup(t("Gui.Toast.ClickToUpdate"), [
                             put_html('''
-                                <div style="text-align: center; padding: 20px 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-                                    <div style="font-size: 3.5rem; font-weight: 800; background: linear-gradient(135deg, #6c5ce7, #a29bfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; letter-spacing: -1px;">
-                                        New Update
+                                <div style="text-align: center; padding: 15px 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                    <div style="margin-bottom: 20px;">
+                                        <div style="width: 50px; height: 50px; background: #fff0f0; border-radius: 25px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        </div>
                                     </div>
-                                    <div style="font-size: 1.1rem; color: #636e72; line-height: 1.6; margin-bottom: 25px; padding: 0 20px;">
-                                        发现新版本，多项功能已完成优化优化。请立即更新以获取最新功能和修复喵！
+                                    <div style="font-size: 1.8rem; font-weight: 800; color: #343a40; margin-bottom: 10px;">有可用更新！</div>
+                                    <div style="font-size: 0.95rem; color: #868e96; margin-bottom: 25px; line-height: 1.5;">发现新版本，建议立即更新以获得最佳的脚本运行体验。</div>
+                                    
+                                    <div style="background: #f8f9fa; border-radius: 10px; padding: 15px; margin: 0 15px 25px; text-align: left; border: 1px solid #dee2e6;">
+                                        <div style="font-weight: 700; color: #495057; margin-bottom: 5px;">✨ 温馨提示:</div>
+                                        <div style="font-size: 0.85rem; color: #495057;">
+                                            • 为确保脚本稳定性和安全性，请及时进行更新。<br>
+                                        </div>
                                     </div>
                                 </div>
                             '''),
-                            put_buttons([{"label": "立即更新 / Update Now", "value": "update", "color": "primary"}], 
-                                       onclick=[handle_update_click]).style("text-align: center; margin-top: -10px; padding-bottom: 30px;")
+                            put_buttons([{"label": "立即更新 / Update Now", "value": "update", "color": "danger"}], 
+                                       onclick=[handle_update_click]).style("text-align: center; width: 100%; padding-bottom: 20px; border-top: none;")
                         ], size="large", implicit_close=True)
-                    th._task.delay = 30
+                    th._task.delay = 60
                 else:
                     th._task.delay = 2
                 yield
