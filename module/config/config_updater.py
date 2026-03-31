@@ -243,6 +243,12 @@ class ConfigGenerator:
                 deep_set(data, keys=f'{task}.Scheduler.Command.value', value=task)
                 deep_set(data, keys=f'{task}.Scheduler.Command.display', value='hide')
 
+        # Hide Campaign.Mode for non-main tasks (Mode only applies to main maps)
+        for task in list(data.keys()):
+            if task not in MAINS:
+                if deep_get(data, keys=f'{task}.Campaign.Mode') is not None:
+                    deep_set(data, keys=f'{task}.Campaign.Mode.display', value='hide')
+
         return data
 
     @timer
