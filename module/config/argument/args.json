@@ -4295,7 +4295,8 @@
         "option": [
           "normal",
           "hard"
-        ]
+        ],
+        "display": "hide"
       },
       "UseClearMode": {
         "type": "checkbox",
