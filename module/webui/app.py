@@ -1158,7 +1158,7 @@ class AlasGUI(Frame):
                 recent = get_recent_commission_entries(instance_name, limit=10)
 
                 with use_scope("commission_income", clear=True):
-                    html = '<div style="padding: 0;">'
+                    html = '<div style="padding: 0; width: 100%; max-width: 100%;">'
 
                     html += f'<div style="font-size: 1rem; font-weight: 500; color: #333; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #eee;">{t("Gui.Stat.CommissionIncomeTitle")}</div>'
 
@@ -1195,7 +1195,8 @@ class AlasGUI(Frame):
                     if not has_data:
                         html2 += f'<p style="margin: 12px 0; color: #999; font-size: 13px;">{t("Gui.Stat.CommissionIncomeNoData")}</p>'
                     else:
-                        html2 += '<table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">'
+                        html2 += '<table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; table-layout: fixed;">'
+                        html2 += '<colgroup><col style="width: 40%;"><col style="width: 20%;"><col style="width: 20%;"><col style="width: 20%;"></colgroup>'
                         html2 += '<thead><tr>'
                         html2 += f'<th style="text-align: left; padding: 8px 10px; background: #f7f7f7; border-bottom: 1px solid #e0e0e0; font-weight: 500; color: #555; font-size: 0.8rem;">{t("Gui.Stat.CommissionIncomeHeaderItem")}</th>'
                         html2 += f'<th style="text-align: right; padding: 8px 10px; background: #f7f7f7; border-bottom: 1px solid #e0e0e0; font-weight: 500; color: #555; font-size: 0.8rem;">{t("Gui.Stat.CommissionIncomeHeaderTotal")}</th>'
@@ -1225,7 +1226,7 @@ class AlasGUI(Frame):
                     if recent:
                         html3 += f'<div style="height: 1px; background: #eee; margin: 24px 0;"></div>'
                         html3 += f'<div style="font-size: 0.9rem; font-weight: 500; color: #333; margin-bottom: 10px;">{t("Gui.Stat.CommissionIncomeRecentTitle")}</div>'
-                        html3 += '<div style="font-size: 13px;">'
+                        html3 += '<div style="font-size: 13px; width: 100%;">'
                         for entry in recent:
                             ts = entry.get('ts', '')
                             try:
