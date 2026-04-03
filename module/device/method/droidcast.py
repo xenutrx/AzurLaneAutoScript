@@ -250,6 +250,13 @@ class DroidCast(Uiautomator2):
         if image is None or len(image) == 0:
             raise ImageTruncated('Empty image content from DroidCast_raw')
 
+        # DroidCast returned a short error message instead of raw bitmap data
+        # e.g. b':(  Failed to generate the screenshot on device / emulator: ...'
+        # Raise ConnectionError to immediately trigger droidcast_init in the retry handler
+        if len(image) < 500:
+            logger.warning(f'Unexpected screenshot: {image}')
+            raise requests.exceptions.ConnectionError(f'DroidCast service error: {image!r}')
+
         try:
             arr = np.frombuffer(image, dtype=np.uint16)
             if rotate:
@@ -261,8 +268,6 @@ class DroidCast(Uiautomator2):
             else:
                 arr = arr.reshape(shape)
         except ValueError as e:
-            if image is not None and len(image) < 500:
-                logger.warning(f'Unexpected screenshot: {image}')
             # Try to load as `DroidCast`
             image = np.frombuffer(image, np.uint8)
             if image is not None:
@@ -318,7 +323,7 @@ class DroidCast(Uiautomator2):
                 if resp.status_code == 404:
                     logger.attr('DroidCast', 'online')
                     return True
-            except requests.exceptions.ConnectionError:
+            except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout):
                 logger.attr('DroidCast', 'offline')
 
         logger.warning('Wait DroidCast startup timeout, assume started')
