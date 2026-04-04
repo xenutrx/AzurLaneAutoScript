@@ -44,3 +44,16 @@ jobs:
           static_list: ${{ github.event.repository.name }}
           mappings: "AzurLaneAutoScript=>AzurLaneAutoScript"
           force_update: true
+
+      - name: sync github -> gitcode
+        uses: Yikun/hub-mirror-action@master
+        if: env.gitcode_key_2 && env.gitcode_token_2 && env.gitcode_user_2
+        with:
+          src: 'github/${{ github.repository_owner }}'
+          dst: 'gitcode/${{ secrets.GITCODE_USER_2 }}'
+          dst_key: ${{ secrets.GITCODE_PRIVATE_KEY_2 }}
+          dst_token: ${{ secrets.GITCODE_TOKEN_2 }}
+          account_type: user
+          static_list: ${{ github.event.repository.name }}
+          mappings: "AzurLaneAutoScript=>AzurLaneAutoScript"
+          force_update: true
