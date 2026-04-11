@@ -111,21 +111,47 @@ class ProcessManager:
     def state(self) -> int:
         if self.alive:
             return 1
+        reason = self._infer_exit_reason()
+        if reason in ("manual_stop", "finish"):
+            return 2
+        elif reason == "update":
+            return 4
+        elif reason == "crash":
+            return 3
         elif len(self.renderables) == 0:
             return 2
         else:
-            console = Console(no_color=True)
-            with console.capture() as capture:
-                console.print(self.renderables[-1])
-            s = capture.get().strip()
-            if s.endswith("Reason: Manual stop"):
-                return 2
-            elif s.endswith("Reason: Finish"):
-                return 2
-            elif s.endswith("Reason: Update"):
-                return 4
-            else:
-                return 3
+            return 3
+
+    @staticmethod
+    def _renderable_to_text(renderable: ConsoleRenderable) -> str:
+        if isinstance(renderable, str):
+            return renderable.strip()
+        console = Console(no_color=True)
+        with console.capture() as capture:
+            console.print(renderable)
+        return capture.get().strip()
+
+    def _infer_exit_reason(self) -> Union[str, None]:
+        for renderable in reversed(self.renderables[-20:]):
+            text = self._renderable_to_text(renderable)
+            if not text:
+                continue
+            lower = text.lower()
+            if "reason: manual stop" in lower:
+                return "manual_stop"
+            if "reason: finish" in lower:
+                return "finish"
+            if "reason: update" in lower or "原因: 更新" in text:
+                return "update"
+
+        if self._process is None:
+            return None
+        if self._process.exitcode == 0:
+            return "finish"
+        if self._process.exitcode is not None:
+            return "crash"
+        return None
 
     @classmethod
     def get_manager(cls, config_name: str) -> "ProcessManager":

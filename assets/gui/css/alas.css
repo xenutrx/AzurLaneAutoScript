@@ -549,6 +549,14 @@ pre.rich-traceback-code {
     --alas-timeline-active-node-border: #185FA5;
     --alas-timeline-active-line: #B5D4F4;
 
+    --alas-timeline-warning-bg: rgba(255, 255, 255, 0.85);
+    --alas-timeline-warning-border: #F2C97D;
+    --alas-timeline-warning-badge-bg: #FFF4DB;
+    --alas-timeline-warning-badge-text: #8A5600;
+    --alas-timeline-warning-node-bg: #FFF4DB;
+    --alas-timeline-warning-node-border: #C98512;
+    --alas-timeline-warning-line: #F6DCA6;
+
     --alas-timeline-failed-bg: rgba(255, 255, 255, 0.85);
     --alas-timeline-failed-border: #F09595;
     --alas-timeline-failed-badge-bg: #FCEBEB;
@@ -604,6 +612,7 @@ pre.rich-traceback-code {
 
 .alas-log-step.is-completed:not(:last-child)::after { background: var(--alas-timeline-completed-line); }
 .alas-log-step.is-active:not(:last-child)::after { background: var(--alas-timeline-active-line); }
+.alas-log-step.is-warning:not(:last-child)::after { background: var(--alas-timeline-warning-line); }
 .alas-log-step.is-failed:not(:last-child)::after { background: var(--alas-timeline-failed-line); }
 
 .alas-log-step-marker {
@@ -639,10 +648,27 @@ pre.rich-traceback-code {
     box-shadow: none;
 }
 
+.alas-log-step.is-warning .alas-log-step-icon, .alas-log-step-icon.warn {
+    background: var(--alas-timeline-warning-node-bg);
+    border-color: var(--alas-timeline-warning-node-border);
+    box-shadow: none;
+}
+
 .alas-log-step.is-failed .alas-log-step-icon, .alas-log-step-icon.x {
     background: var(--alas-timeline-failed-node-bg);
     border-color: var(--alas-timeline-failed-node-border);
     box-shadow: none;
+}
+
+.alas-log-step-icon.warn::before {
+    content: "!";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--alas-timeline-warning-badge-text);
 }
 
 .alas-log-step-icon.x::before,
@@ -670,6 +696,7 @@ pre.rich-traceback-code {
 
 .alas-log-step.is-active .alas-log-step-main { border-color: var(--alas-timeline-active-border); background: var(--alas-timeline-active-bg); }
 .alas-log-step.is-completed .alas-log-step-main { border-color: var(--alas-timeline-completed-border); background: var(--alas-timeline-completed-bg); }
+.alas-log-step.is-warning .alas-log-step-main { border-color: var(--alas-timeline-warning-border); background: var(--alas-timeline-warning-bg); }
 .alas-log-step.is-failed .alas-log-step-main { border-color: var(--alas-timeline-failed-border); background: var(--alas-timeline-failed-bg); }
 
 .alas-log-step-head {
@@ -705,6 +732,11 @@ pre.rich-traceback-code {
     background: var(--alas-timeline-completed-badge-bg);
 }
 
+.alas-log-step.is-warning .alas-log-step-badge {
+    color: var(--alas-timeline-warning-badge-text);
+    background: var(--alas-timeline-warning-badge-bg);
+}
+
 .alas-log-step.is-failed .alas-log-step-badge {
     color: var(--alas-timeline-failed-badge-text);
     background: var(--alas-timeline-failed-badge-bg);
@@ -726,8 +758,13 @@ pre.rich-traceback-code {
     font-family: 'JetBrains Mono NL', monospace !important;
 }
 
-/* 只在失败状态显示行内摘要，正常/完成状态隐藏 */
-.alas-log-step:not(.is-failed) .alas-log-step-summary {
+/* 只在失败/需关注状态显示行内摘要，正常/完成状态隐藏 */
+.alas-log-step.is-warning .alas-log-step-summary {
+    color: var(--alas-timeline-warning-badge-text);
+    background: var(--alas-timeline-warning-badge-bg);
+}
+
+.alas-log-step:not(.is-failed):not(.is-warning) .alas-log-step-summary {
     display: none;
 }
 

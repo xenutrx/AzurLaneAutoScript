@@ -266,11 +266,18 @@ class RichLog:
             "details": [],
             "line_count": 0,
             "last_message": "",
+            "has_error": False,
         }
 
     @staticmethod
     def _drop_step_details(step: Dict[str, Any]) -> None:
         step["details"] = []
+
+    def _finalize_step(self, step: Dict[str, Any], terminal_status: Optional[str] = None) -> None:
+        status = terminal_status or ("warning" if step.get("has_error") else "completed")
+        step["status"] = status
+        if status == "completed":
+            self._drop_step_details(step)
 
     def _ensure_step(self, title: Optional[str] = None) -> Dict[str, Any]:
         if not self.timeline_steps:
@@ -279,8 +286,7 @@ class RichLog:
             )
         elif title and self.timeline_steps[-1]["title"] != title:
             if self.timeline_steps[-1]["status"] == "active":
-                self.timeline_steps[-1]["status"] = "completed"
-            self._drop_step_details(self.timeline_steps[-1])
+                self._finalize_step(self.timeline_steps[-1])
             self.timeline_steps.append(self._create_step(title, status="active"))
         elif title and self.timeline_steps[-1]["title"] == title:
             if self.timeline_steps[-1]["status"] != "failed":
@@ -312,7 +318,9 @@ class RichLog:
             step["last_message"] = detail_lines[-1]
 
         if self._is_error_text(text_content):
-            step["status"] = "failed"
+            step["has_error"] = True
+            if step["status"] == "active":
+                step["status"] = "warning"
 
     def _sync_process_state(self, pm: ProcessManager) -> None:
         if not self.timeline_steps:
@@ -324,16 +332,15 @@ class RichLog:
 
         last_step = self.timeline_steps[-1]
         if pm.alive:
-            if last_step["status"] != "failed":
+            if last_step["status"] not in ("failed", "warning"):
                 last_step["status"] = "active"
             return
 
         if pm.state == 3:
             last_step["status"] = "failed"
-            self._drop_step_details(last_step)
-        elif last_step["status"] == "active":
-            last_step["status"] = "completed"
-            self._drop_step_details(last_step)
+            last_step["has_error"] = True
+        else:
+            self._finalize_step(last_step)
 
     @staticmethod
     def _status_meta(status: str) -> Dict[str, str]:
@@ -342,6 +349,12 @@ class RichLog:
                 "class_name": "is-failed",
                 "label": "执行失败",
                 "icon": "x",
+            }
+        if status == "warning":
+            return {
+                "class_name": "is-warning",
+                "label": "需关注",
+                "icon": "warn",
             }
         if status == "active":
             return {
@@ -373,7 +386,7 @@ class RichLog:
             log_count = f"{step['line_count']} 条"
             detail_section = ""
 
-            if step["status"] == "active":
+            if step["status"] in ("active", "warning", "failed") and step["details"]:
                 detail_html = "".join(step["details"])
                 detail_section = (
                     f'<details class="alas-log-step-details" data-step-index="{index}">'
