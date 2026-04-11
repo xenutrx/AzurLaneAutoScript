@@ -292,6 +292,15 @@ pre.rich-traceback-code {
     --alas-timeline-active-node-border: #388ADD;
     --alas-timeline-active-line: rgba(56, 138, 221, 0.4);
 
+    /* 需关注状态 */
+    --alas-timeline-warning-bg: rgba(33, 37, 43, 0.82);
+    --alas-timeline-warning-border: rgba(245, 158, 11, 0.3);
+    --alas-timeline-warning-badge-bg: rgba(245, 158, 11, 0.14);
+    --alas-timeline-warning-badge-text: #fcd34d;
+    --alas-timeline-warning-node-bg: rgba(245, 158, 11, 0.15);
+    --alas-timeline-warning-node-border: #f59e0b;
+    --alas-timeline-warning-line: rgba(245, 158, 11, 0.4);
+
     /* 失败状态 */
     --alas-timeline-failed-bg: rgba(33, 37, 43, 0.82);
     --alas-timeline-failed-border: rgba(239, 68, 68, 0.3);
@@ -306,6 +315,11 @@ pre.rich-traceback-code {
 .alas-log-step-summary {
     color: #fca5a5;
     background: rgba(239, 68, 68, 0.1);
+}
+
+.alas-log-step.is-warning .alas-log-step-summary {
+    color: #fcd34d;
+    background: rgba(245, 158, 11, 0.12);
 }
 
 .alas-log-step-details > summary:hover {
