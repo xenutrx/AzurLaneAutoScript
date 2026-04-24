@@ -404,7 +404,7 @@ class MeowfficerEnhance(MeowfficerBase):
 
             # Only for 'leveled_max'
             if self.config.MeowfficerTrain_EnhanceIndex < 12:
-                self.config.MeowfficerTrain_EnhanceIndex += 1
+                #self.config.MeowfficerTrain_EnhanceIndex += 1
                 logger.info(f'Increase MeowfficerTrain_EnhanceIndex to {self.config.MeowfficerTrain_EnhanceIndex}')
                 continue
             else:
